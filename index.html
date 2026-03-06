@@ -1065,9 +1065,9 @@ _Sent from website booking form_`;
 
 // ===================== GALLERY SYSTEM =====================
 const ADMIN_PASS = 'sangeeta2025';
-const STORAGE_KEY = 'aakarshan_gallery_v1';
 let isAdmin = false;
 let pendingFiles = [];
+let onlineGallery = [];
 
 const defaultPhotos = [
   { src:'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600&q=85', lbl:'Indian Bridal Look', sub:'Traditional Bridal Makeup', isDefault:true },
@@ -1077,21 +1077,9 @@ const defaultPhotos = [
   { src:'https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=900&q=85', lbl:'Makeup Artistry', sub:'Professional Bridal Look', isDefault:true }
 ];
 
-function loadGalleryData() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : [];
-  } catch(e) { return []; }
-}
-
-function saveGalleryData(data) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
-}
-
 function renderGallery() {
   const grid = document.getElementById('galGrid');
-  const uploadedPhotos = loadGalleryData();
-  const allPhotos = [...defaultPhotos, ...uploadedPhotos];
+  const allPhotos = [...defaultPhotos, ...onlineGallery];
   grid.innerHTML = '';
   if(allPhotos.length > 5) grid.classList.add('has-uploads');
   else grid.classList.remove('has-uploads');
@@ -1115,9 +1103,7 @@ function renderGallery() {
 
 function deletePhoto(uploadedIdx) {
   if(!confirm('Delete this photo?')) return;
-  const data = loadGalleryData();
-  data.splice(uploadedIdx, 1);
-  saveGalleryData(data);
+  onlineGallery.splice(uploadedIdx, 1);
   renderGallery();
 }
 
@@ -1213,21 +1199,36 @@ function removePendingByActive(activeIdx) {
   renderPendingThumbs();
 }
 
-function addToGallery() {
+async function addToGallery() {
   const active = pendingFiles.filter(Boolean);
   if(!active.length) { alert('Please select at least one photo.'); return; }
   const lbl = document.getElementById('captionInput').value.trim() || 'Our Work';
   const sub = document.getElementById('subcaptionInput').value.trim() || 'Aakarshan Beauty Parlour';
-  const data = loadGalleryData();
-  active.forEach(src => data.push({ src, lbl, sub, isDefault:false }));
-  saveGalleryData(data);
-  // Reset
+
+  const btn = document.querySelector('.upload-submit-btn');
+  if(btn) { btn.textContent = '⏳ Uploading...'; btn.disabled = true; }
+
+  for(const src of active) {
+    const photo = { src, lbl, sub, isDefault: false };
+    onlineGallery.push(photo);
+    // Save to Google Sheets
+    try {
+      await fetch(GSHEET_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type:'gallery', caption: lbl, url: src }),
+        mode: 'no-cors'
+      });
+    } catch(e) { console.log('Gallery save failed', e); }
+  }
+
   pendingFiles = [];
   document.getElementById('uploadPreview').innerHTML = '';
   document.getElementById('captionRow').style.display = 'none';
   document.getElementById('captionInput').value = '';
   document.getElementById('subcaptionInput').value = '';
   document.getElementById('fileInput').value = '';
+  if(btn) { btn.textContent = '📤 Add to Gallery'; btn.disabled = false; }
   renderGallery();
   alert(`✅ ${active.length} photo(s) added to gallery!`);
 }
@@ -1246,8 +1247,9 @@ document.getElementById('loginModal').addEventListener('click', function(e){
   if(e.target === this) closeModal();
 });
 
-// ===================== RATING & REVIEW SYSTEM =====================
-const REVIEW_KEY = 'aakarshan_reviews_v1';
+// ===================== RATING & REVIEW SYSTEM (Google Sheets) =====================
+const GSHEET_URL = 'https://script.google.com/macros/s/AKfycbzBkBWOBWK-s-giMeo0wN9eK59PbgfQzagz8Jh5kOvl_GLWbdA4Efob6pSWcmb3Mb2z/exec';
+
 const defaultReviews = [
   { name:'Priya Sharma', loc:'Seoni, Madhya Pradesh', stars:5, text:'I had my bridal makeup done at Aakarshan and I looked absolutely stunning! The team understood exactly what I wanted. My guests couldn\'t stop complimenting me all day!' },
   { name:'Ananya Reddy', loc:'Seoni, Madhya Pradesh', stars:5, text:'The HydraFacial here completely transformed my skin! The staff is so warm and welcoming. I\'ve been a regular for 3 years and the quality never disappoints.' },
@@ -1255,21 +1257,41 @@ const defaultReviews = [
 ];
 
 let selectedStars = 0;
+let onlineReviews = [];
 
-function loadReviews() {
-  try { return JSON.parse(localStorage.getItem(REVIEW_KEY)) || []; } catch(e) { return []; }
+async function fetchOnlineReviews() {
+  try {
+    const res = await fetch(GSHEET_URL);
+    const data = await res.json();
+    onlineReviews = (data.reviews || []).reverse();
+    onlineGallery = (data.gallery || []).map(g => ({ src: g.url, lbl: g.caption, sub: 'Aakarshan Beauty Parlour', isDefault: false }));
+  } catch(e) {
+    onlineReviews = [];
+    onlineGallery = [];
+  }
+  renderReviews();
+  renderGallery();
 }
-function saveReviews(data) {
-  try { localStorage.setItem(REVIEW_KEY, JSON.stringify(data)); } catch(e) {}
+
+async function saveOnlineReview(review) {
+  try {
+    await fetch(GSHEET_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(review),
+      mode: 'no-cors'
+    });
+  } catch(e) {
+    console.log('Save failed', e);
+  }
 }
 
-function allReviews() { return [...defaultReviews, ...loadReviews()]; }
-
+function allReviews() { return [...defaultReviews, ...onlineReviews]; }
 function starsHTML(n) { return '★'.repeat(n) + '☆'.repeat(5-n); }
 
 function renderReviews() {
   const grid = document.getElementById('reviewsGrid');
-  if(!grid) return;
+  if (!grid) return;
   const reviews = allReviews();
   grid.innerHTML = '';
   reviews.forEach(r => {
@@ -1324,10 +1346,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
       document.getElementById('starLabel').textContent = labels[selectedStars];
     });
   });
-  renderReviews();
+  fetchOnlineReviews();
 });
 
-function submitReview() {
+async function submitReview() {
   const name = document.getElementById('rvName').value.trim();
   const loc  = document.getElementById('rvLoc').value.trim();
   const text = document.getElementById('rvText').value.trim();
@@ -1335,25 +1357,32 @@ function submitReview() {
   if(!selectedStars) { alert('Please select a star rating.'); return; }
   if(!text) { alert('Please write a short review.'); return; }
 
-  const data = loadReviews();
-  data.push({ name, loc: loc||'Seoni, MP', stars: selectedStars, text });
-  saveReviews(data);
+  const btn = document.querySelector('.btn-review-submit');
+  if(btn) { btn.textContent = '⏳ Posting...'; btn.disabled = true; }
+
+  const review = { name, loc: loc||'Seoni, MP', stars: selectedStars, text };
+  await saveOnlineReview(review);
+
+  // Optimistically add to UI immediately
+  onlineReviews.unshift(review);
   renderReviews();
 
-  // Reset form
   document.getElementById('rvName').value = '';
   document.getElementById('rvLoc').value = '';
   document.getElementById('rvText').value = '';
   selectedStars = 0;
   document.querySelectorAll('.sp-star').forEach(s=>s.classList.remove('active'));
   document.getElementById('starLabel').textContent = 'Tap a star to rate';
+  if(btn) { btn.textContent = '✨ Submit Review'; btn.disabled = false; }
   const ok = document.getElementById('rvSuccess');
   ok.style.display = 'block';
   setTimeout(()=>ok.style.display='none', 4000);
 }
 
-// Init on load (fallback if DOMContentLoaded already fired)
-if(document.readyState !== 'loading') renderReviews();
+// Init on load
+if(document.readyState !== 'loading') fetchOnlineReviews();
+
+
 </script>
 </body>
 </html>
