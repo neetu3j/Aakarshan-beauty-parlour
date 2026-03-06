@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aakarshan Beauty Parlour</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --magenta: #e91e8c; --rose: #ff6b9d; --gold: #f5a623;
+  --saffron: #ff6b2b; --teal: #00bcd4; --deep: #1a0533;
+  --purple: #7c3aed; --font-h: 'Playfair Display', serif; --font-b: 'Poppins', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-b); background: #fff; color: var(--deep); overflow-x: hidden; }
+
+/* CURSOR */
+#cursor {
+  width: 18px; height: 18px; background: var(--magenta); border-radius: 50%;
+  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%); transition: width .3s, height .3s, background .3s;
+  mix-blend-mode: multiply;
+}
+#cursor.big { width: 50px; height: 50px; background: var(--gold); }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.7rem 3rem;
+  background: linear-gradient(90deg, var(--deep) 0%, #2d0a5e 100%);
+  box-shadow: 0 4px 30px rgba(233,30,140,.3);
+}
+.logo-wrap { display: flex; align-items: center; gap: .8rem; }
+.logo-icon {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-size: 1.6rem; animation: sparkleAnim 3s ease-in-out infinite; line-height: 1;
+}
+@keyframes sparkleAnim {
+  0%,100% { transform: scale(1) rotate(-5deg); filter: brightness(1); }
+  50% { transform: scale(1.2) rotate(5deg); filter: brightness(1.4) drop-shadow(0 0 8px var(--gold)); }
+}
+.bride-logo-svg { animation: brideFloat 4s ease-in-out infinite; filter: drop-shadow(0 4px 12px rgba(233,30,140,.4)); }
+@keyframes brideFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+.bride-photo-logo { position:relative; width:72px; height:72px; flex-shrink:0; }
+.bride-photo-img { width:72px; height:72px; border-radius:50%; object-fit:cover; object-position:center top; display:block; position:relative; z-index:1; animation: brideFloat 4s ease-in-out infinite; }
+.bride-photo-ring { position:absolute; inset:-4px; border-radius:50%; background:linear-gradient(135deg,var(--gold),var(--magenta),var(--teal),var(--gold)); z-index:0; animation: ringRotate 4s linear infinite; }
+.bride-photo-ring::after { content:''; position:absolute; inset:4px; border-radius:50%; background:linear-gradient(90deg,var(--deep),#2d0a5e); }
+@keyframes brideFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+@keyframes ringRotate { to { transform: rotate(360deg); } }
+.logo-text { font-family: var(--font-h); font-size: 1.6rem; font-weight: 900; text-decoration: none; line-height: 1; letter-spacing: .02em; }
+.logo-text .logo-main { background: linear-gradient(90deg, #fff 0%, var(--gold) 50%, var(--rose) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block; font-size: 1.7rem; text-transform: uppercase; letter-spacing: .08em; }
+.logo-text .logo-sub { color: rgba(255,255,255,.75); font-size: .85rem; font-weight: 400; font-style: italic; letter-spacing: .2em; text-transform: uppercase; display: block; margin-top: -.1rem; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: rgba(255,255,255,.8); text-decoration: none; font-size: .82rem;
+  font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+  transition: color .2s; position: relative; padding-bottom: 4px;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+  background: linear-gradient(90deg, var(--magenta), var(--gold)); transition: width .3s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+.nav-book {
+  background: linear-gradient(135deg, var(--magenta), var(--saffron)) !important;
+  color: #fff !important; padding: .55rem 1.6rem; border-radius: 2rem;
+  font-weight: 600 !important; box-shadow: 0 4px 20px rgba(233,30,140,.5);
+}
+.nav-book::after { display: none !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.hamburger span { width: 24px; height: 2px; background: #fff; display: block; }
+
+/* HERO */
+#home {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--deep) 0%, #3d0d7a 45%, #7c1a6e 100%);
+  display: grid; grid-template-columns: 1fr 1fr; padding-top: 72px;
+  position: relative; overflow: hidden;
+}
+#home::before {
+  content: ''; position: absolute; top: -120px; right: -120px;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,166,35,.18), transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+.petal {
+  position: absolute; font-size: 1.5rem;
+  animation: floatP linear infinite; opacity: .6; pointer-events: none;
+}
+@keyframes floatP {
+  0%{transform:translateY(110vh) rotate(0deg);opacity:0}
+  10%{opacity:.6} 90%{opacity:.6}
+  100%{transform:translateY(-10vh) rotate(720deg);opacity:0}
+}
+.hero-left {
+  padding: 4rem 3rem 4rem 4rem; display: flex; flex-direction: column;
+  justify-content: center; position: relative; z-index: 2;
+  animation: slideL .8s ease both;
+}
+@keyframes slideL { from{opacity:0;transform:translateX(-40px)} to{opacity:1;transform:none} }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: rgba(245,166,35,.15); border: 1px solid rgba(245,166,35,.4);
+  color: var(--gold); font-size: .72rem; font-weight: 600; letter-spacing: .15em;
+  text-transform: uppercase; padding: .4rem 1rem; border-radius: 2rem; width: fit-content; margin-bottom: 1.5rem;
+}
+.hero-h1 {
+  font-family: var(--font-h); font-size: clamp(2.8rem,5.5vw,5rem);
+  font-weight: 900; line-height: 1.06; color: #fff; margin-bottom: 1.2rem;
+}
+.hero-h1 .grad {
+  background: linear-gradient(90deg, var(--magenta), var(--gold), var(--rose));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  display: block;
+}
+.hero-sub { color: rgba(255,255,255,.7); font-size: .95rem; line-height: 1.8; max-width: 28rem; margin-bottom: 2.4rem; }
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.btn-glow {
+  display: inline-block; text-decoration: none;
+  background: linear-gradient(135deg, var(--magenta), var(--saffron));
+  color: #fff; padding: .9rem 2.4rem; border-radius: 3rem;
+  font-size: .85rem; font-weight: 600;
+  box-shadow: 0 6px 30px rgba(233,30,140,.5); transition: transform .2s, box-shadow .2s;
+}
+.btn-glow:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(233,30,140,.65); }
+.btn-ghost {
+  display: inline-block; text-decoration: none;
+  border: 2px solid rgba(255,255,255,.4); color: #fff;
+  padding: .9rem 2.4rem; border-radius: 3rem; font-size: .85rem; font-weight: 500;
+  transition: border-color .2s, background .2s, transform .2s;
+}
+.btn-ghost:hover { border-color: var(--gold); background: rgba(245,166,35,.1); transform: translateY(-3px); }
+.hero-stats { display: flex; gap: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,.12); }
+.stat-n {
+  font-family: var(--font-h); font-size: 2.4rem; font-weight: 700; line-height: 1;
+  background: linear-gradient(135deg, var(--gold), var(--rose));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-l { font-size: .7rem; color: rgba(255,255,255,.5); letter-spacing: .1em; text-transform: uppercase; margin-top: .2rem; }
+
+/* Hero right */
+.hero-right {
+  position: relative; z-index: 2; display: flex; align-items: center;
+  justify-content: center; padding: 3rem 3rem 3rem 1rem;
+  animation: slideR .8s .2s ease both;
+}
+@keyframes slideR { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:none} }
+.hero-img-frame { position: relative; width: 100%; max-width: 420px; }
+.hero-img-frame::before {
+  content: ''; position: absolute; inset: -12px;
+  border-radius: 40% 60% 55% 45% / 45% 40% 60% 55%;
+  background: linear-gradient(135deg, var(--magenta), var(--gold), var(--teal));
+  animation: morphB 6s ease-in-out infinite; z-index: -1;
+}
+@keyframes morphB {
+  0%,100%{border-radius:40% 60% 55% 45% / 45% 40% 60% 55%}
+  50%{border-radius:60% 40% 45% 55% / 55% 60% 40% 45%}
+}
+.hero-img-frame img {
+  width: 100%; border-radius: 36% 64% 50% 50% / 50% 36% 64% 50%;
+  object-fit: cover; object-position: center top; aspect-ratio: 3/4; display: block;
+  animation: morphI 6s ease-in-out infinite; box-shadow: 0 30px 80px rgba(0,0,0,.4);
+}
+@keyframes morphI {
+  0%,100%{border-radius:36% 64% 50% 50% / 50% 36% 64% 50%}
+  50%{border-radius:64% 36% 50% 50% / 50% 64% 36% 50%}
+}
+.hero-float {
+  position: absolute; background: #fff; border-radius: 1rem; padding: .8rem 1.2rem;
+  box-shadow: 0 12px 40px rgba(0,0,0,.2); display: flex; align-items: center; gap: .7rem;
+  animation: fb 3s ease-in-out infinite;
+}
+.hero-float.f1 { top: 12%; right: -20px; }
+.hero-float.f2 { bottom: 18%; left: -20px; animation-delay: 1.5s; }
+@keyframes fb { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.hf-icon { font-size: 1.6rem; }
+.hf-text strong { display: block; font-size: .82rem; font-weight: 600; color: var(--deep); }
+.hf-text span { font-size: .7rem; color: #888; }
+
+/* MARQUEE */
+.marquee-bar { background: linear-gradient(90deg,var(--magenta),var(--purple),var(--teal),var(--gold),var(--saffron)); padding: .9rem 0; overflow: hidden; white-space: nowrap; }
+.marquee-inner { display: inline-flex; animation: marquee 18s linear infinite; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee-item { display: inline-flex; align-items: center; gap: .8rem; color: #fff; font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; padding: 0 2.5rem; }
+.mdot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.5); }
+
+/* SERVICES */
+#services {
+  padding: 6rem 3rem;
+  background: linear-gradient(160deg,#fff8ff 0%,#fff0f7 50%,#f0f8ff 100%);
+  position: relative; overflow: hidden;
+}
+#services::before { content:''; position:absolute; top:0; left:0; right:0; height:6px; background:linear-gradient(90deg,var(--magenta),var(--gold),var(--teal),var(--purple)); }
+.sec-header { text-align: center; margin-bottom: 4rem; }
+.sec-tag {
+  display: inline-block; background: linear-gradient(135deg,var(--magenta),var(--purple));
+  color: #fff; font-size: .7rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase;
+  padding: .35rem 1.2rem; border-radius: 2rem; margin-bottom: 1rem;
+}
+.sec-title { font-family: var(--font-h); font-size: clamp(2rem,4vw,3rem); font-weight: 700; color: var(--deep); margin-bottom: .8rem; }
+.sec-title em { font-style: italic; color: var(--magenta); }
+.sec-sub { color: #666; font-size: .9rem; max-width: 36rem; margin: 0 auto; line-height: 1.8; }
+
+.svc-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.8rem; }
+.svc-card {
+  background: #fff; border-radius: 1.5rem; padding: 2rem 1.6rem;
+  border: 2px solid transparent; box-shadow: 0 4px 24px rgba(0,0,0,.06);
+  transition: transform .3s, box-shadow .3s; position: relative; overflow: hidden;
+}
+.svc-card::before { content:''; position:absolute; top:0; left:0; right:0; height:5px; background:var(--cg); }
+.svc-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,.12); border-color: var(--cb); }
+.svc-card.c1{--cg:linear-gradient(90deg,#e91e8c,#ff6b9d);--cb:#e91e8c44;}
+.svc-card.c2{--cg:linear-gradient(90deg,#f5a623,#ff6b2b);--cb:#f5a62344;}
+.svc-card.c3{--cg:linear-gradient(90deg,#7c3aed,#c026d3);--cb:#7c3aed44;}
+.svc-card.c4{--cg:linear-gradient(90deg,#00bcd4,#0284c7);--cb:#00bcd444;}
+.svc-icon { width:56px;height:56px;border-radius:1rem;background:var(--cg);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:1.2rem;box-shadow:0 6px 20px rgba(0,0,0,.12); }
+.svc-name { font-family:var(--font-h);font-size:1.15rem;font-weight:700;color:var(--deep);margin-bottom:.5rem; }
+.svc-desc { font-size:.8rem;color:#777;line-height:1.7;margin-bottom:1.2rem; }
+.svc-list { list-style:none; }
+.svc-list li { display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px dashed #f0e8ff;font-size:.8rem;color:var(--deep); }
+.svc-list li:last-child { border-bottom:none; }
+.ptag { font-weight:600;background:linear-gradient(135deg,var(--magenta),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+
+/* GALLERY */
+#gallery { padding:6rem 3rem; background:var(--deep); position:relative; overflow:hidden; }
+#gallery::before { content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(233,30,140,.12),transparent 65%); }
+#gallery .sec-title { color:#fff; }
+#gallery .sec-sub { color:rgba(255,255,255,.5); }
+.gal-grid { display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:260px 260px;gap:1rem;position:relative;z-index:1; }
+.gal-grid.has-uploads { grid-template-rows:auto; }
+.g-item { border-radius:1.2rem;overflow:hidden;position:relative;transition:transform .35s;height:260px; }
+.g-item:hover { transform:scale(1.02);z-index:2; }
+.g-item:nth-child(1){ grid-row:span 2; height:100%; }
+.g-item:nth-child(5){ grid-column:span 2; }
+.gal-grid.has-uploads .g-item { height:260px; }
+.gal-grid.has-uploads .g-item:nth-child(1){ grid-row:auto; }
+.gal-grid.has-uploads .g-item:nth-child(5){ grid-column:auto; }
+.g-item img { width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform .5s; }
+.g-item:hover img { transform:scale(1.08); }
+.g-ov { position:absolute;inset:0;background:linear-gradient(to top,rgba(26,5,51,.85),transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.4rem;opacity:0;transition:opacity .3s; }
+.g-item:hover .g-ov { opacity:1; }
+.g-lbl { color:#fff;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem; }
+.g-sub2 { color:rgba(255,255,255,.6);font-size:.72rem; }
+.g-item::after { content:'';position:absolute;inset:0;border-radius:1.2rem;border:3px solid transparent;background:linear-gradient(135deg,var(--magenta),var(--gold),var(--teal)) border-box;-webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude;opacity:0;transition:opacity .3s; }
+.g-item:hover::after { opacity:1; }
+.g-delete-btn { position:absolute;top:10px;right:10px;background:rgba(220,38,38,.85);color:#fff;border:none;border-radius:50%;width:30px;height:30px;font-size:1rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:10;transition:background .2s; }
+.g-delete-btn:hover { background:#dc2626; }
+.admin-active .g-delete-btn { display:flex; }
+
+/* ADMIN TOGGLE BTN */
+.gal-admin-bar { display:flex;justify-content:center;align-items:center;gap:1rem;margin-bottom:2rem;position:relative;z-index:2; }
+.btn-admin-toggle { background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);padding:.55rem 1.4rem;border-radius:2rem;font-family:var(--font-b);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s; }
+.btn-admin-toggle:hover { background:rgba(255,255,255,.18);color:#fff; }
+.btn-admin-toggle.active { background:linear-gradient(135deg,var(--magenta),var(--purple));border-color:transparent;color:#fff;box-shadow:0 4px 20px rgba(233,30,140,.4); }
+
+/* UPLOAD PANEL */
+.upload-panel { display:none;background:rgba(255,255,255,.07);border:1.5px dashed rgba(233,30,140,.5);border-radius:1.5rem;padding:2rem;margin-bottom:2rem;position:relative;z-index:2;text-align:center; }
+.upload-panel.show { display:block; }
+.upload-drop { border:2px dashed rgba(255,255,255,.2);border-radius:1rem;padding:2.5rem 2rem;cursor:pointer;transition:border-color .2s,background .2s; }
+.upload-drop:hover,.upload-drop.drag-over { border-color:var(--magenta);background:rgba(233,30,140,.08); }
+.upload-drop-icon { font-size:2.5rem;margin-bottom:.8rem; }
+.upload-drop p { color:rgba(255,255,255,.7);font-size:.88rem;margin-bottom:.4rem; }
+.upload-drop span { color:rgba(255,255,255,.4);font-size:.75rem; }
+.upload-drop input[type=file] { display:none; }
+.upload-label { display:inline-block;margin-top:1rem;background:linear-gradient(135deg,var(--magenta),var(--saffron));color:#fff;padding:.6rem 1.8rem;border-radius:2rem;font-size:.82rem;font-weight:600;cursor:pointer;transition:transform .2s; }
+.upload-label:hover { transform:translateY(-2px); }
+.upload-caption-row { display:flex;gap:.8rem;margin-top:1.2rem; }
+.upload-caption-row input { flex:1;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15);border-radius:.7rem;padding:.7rem 1rem;color:#fff;font-family:var(--font-b);font-size:.82rem;outline:none; }
+.upload-caption-row input:focus { border-color:var(--magenta); }
+.upload-caption-row input::placeholder { color:rgba(255,255,255,.3); }
+.btn-upload-add { background:linear-gradient(135deg,var(--magenta),var(--purple));color:#fff;border:none;border-radius:.7rem;padding:.7rem 1.4rem;font-family:var(--font-b);font-size:.82rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:transform .2s; }
+.btn-upload-add:hover { transform:translateY(-2px); }
+.upload-preview { display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.2rem;justify-content:center; }
+.upload-thumb { position:relative;width:80px;height:80px;border-radius:.8rem;overflow:hidden; }
+.upload-thumb img { width:100%;height:100%;object-fit:cover; }
+.upload-thumb-del { position:absolute;top:3px;right:3px;background:rgba(220,38,38,.9);color:#fff;border:none;border-radius:50%;width:20px;height:20px;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center; }
+
+/* LOGIN MODAL */
+.modal-overlay { display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:2000;align-items:center;justify-content:center; }
+.modal-overlay.show { display:flex; }
+.modal-box { background:linear-gradient(135deg,#1a0533,#2d0a5e);border:1px solid rgba(233,30,140,.3);border-radius:1.5rem;padding:2.5rem;width:90%;max-width:360px;text-align:center; }
+.modal-box h3 { font-family:var(--font-h);font-size:1.5rem;color:#fff;margin-bottom:.4rem; }
+.modal-box p { font-size:.82rem;color:rgba(255,255,255,.5);margin-bottom:1.5rem; }
+.modal-input { width:100%;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15);border-radius:.7rem;padding:.85rem 1rem;color:#fff;font-family:var(--font-b);font-size:.9rem;outline:none;margin-bottom:1rem; }
+.modal-input:focus { border-color:var(--magenta); }
+.modal-input::placeholder { color:rgba(255,255,255,.3); }
+.modal-err { color:#f87171;font-size:.78rem;margin-bottom:.8rem;display:none; }
+.btn-modal-login { width:100%;border:none;cursor:pointer;background:linear-gradient(135deg,var(--magenta),var(--saffron));color:#fff;padding:.9rem;border-radius:3rem;font-family:var(--font-b);font-size:.9rem;font-weight:600;box-shadow:0 8px 24px rgba(233,30,140,.4);transition:transform .2s; }
+.btn-modal-login:hover { transform:translateY(-2px); }
+.btn-modal-cancel { background:none;border:none;color:rgba(255,255,255,.4);font-size:.78rem;cursor:pointer;margin-top:.8rem;font-family:var(--font-b); }
+.btn-modal-cancel:hover { color:#fff; }
+
+/* TESTIMONIALS */
+#testimonials { padding:6rem 3rem;background:linear-gradient(135deg,#fff8ff,#f0ecff 50%,#fff0f7); }
+.testi-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3.5rem; }
+.tcard { background:#fff;border-radius:1.5rem;padding:2rem;position:relative;box-shadow:0 8px 32px rgba(124,58,237,.08);border:1px solid rgba(233,30,140,.1);transition:transform .3s,box-shadow .3s; }
+.tcard:hover { transform:translateY(-6px);box-shadow:0 20px 50px rgba(233,30,140,.15); }
+.t-stars { color:var(--gold);font-size:1rem;margin-bottom:.8rem;letter-spacing:2px; }
+.t-text { font-size:.88rem;color:#555;line-height:1.8;margin-bottom:1.4rem;font-style:italic; }
+.t-text::before { content:'\201C';font-family:var(--font-h);font-size:2rem;color:var(--magenta);line-height:0;vertical-align:-.4rem;margin-right:.2rem; }
+.t-author { display:flex;align-items:center;gap:.8rem; }
+.t-av { width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--magenta),var(--gold));display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-h);font-size:1rem;font-weight:700; }
+.t-name { font-weight:600;font-size:.85rem;color:var(--deep); }
+.t-loc { font-size:.72rem;color:#999; }
+.t-badge { position:absolute;top:1.2rem;right:1.2rem;background:linear-gradient(135deg,var(--magenta),var(--purple));color:#fff;font-size:.65rem;font-weight:700;padding:.25rem .7rem;border-radius:1rem;letter-spacing:.08em; }
+
+/* RATING SUMMARY */
+.rating-summary { display:flex;align-items:center;gap:2.5rem;background:#fff;border-radius:1.5rem;padding:2rem 2.5rem;box-shadow:0 8px 32px rgba(124,58,237,.1);border:1px solid rgba(233,30,140,.1);margin-bottom:3rem;flex-wrap:wrap; }
+.rs-score { font-family:var(--font-h);font-size:4.5rem;font-weight:900;line-height:1;background:linear-gradient(135deg,var(--magenta),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.rs-right { flex:1;min-width:200px; }
+.rs-stars { color:var(--gold);font-size:1.6rem;letter-spacing:3px;margin-bottom:.3rem; }
+.rs-count { font-size:.82rem;color:#888;margin-bottom:.8rem; }
+.rs-bars { display:flex;flex-direction:column;gap:.35rem; }
+.rs-bar-row { display:flex;align-items:center;gap:.6rem;font-size:.72rem;color:#666; }
+.rs-bar-row span:first-child { width:30px;text-align:right; }
+.rs-bar-track { flex:1;height:7px;background:#f0e8ff;border-radius:4px;overflow:hidden; }
+.rs-bar-fill { height:100%;background:linear-gradient(90deg,var(--magenta),var(--gold));border-radius:4px;transition:width .6s ease; }
+.rs-bar-row span:last-child { width:24px; }
+
+/* REVIEW FORM */
+.review-form-wrap { margin-top:3rem; }
+.review-form-box { background:#fff;border-radius:1.5rem;padding:2.5rem;box-shadow:0 8px 32px rgba(124,58,237,.1);border:1px solid rgba(233,30,140,.12);max-width:700px;margin:0 auto; }
+.rf-title { font-family:var(--font-h);font-size:1.5rem;font-weight:700;color:var(--deep);margin-bottom:.3rem; }
+.rf-sub { font-size:.82rem;color:#888;margin-bottom:1.8rem; }
+.rf-row { display:grid;grid-template-columns:1fr 1fr;gap:1rem; }
+.rf-field { display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem; }
+.rf-field label { font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#888; }
+.rf-field input,.rf-field textarea { background:#faf7ff;border:1.5px solid #e8d5f5;border-radius:.7rem;padding:.8rem 1rem;color:var(--deep);font-family:var(--font-b);font-size:.88rem;outline:none;transition:border-color .2s; }
+.rf-field input:focus,.rf-field textarea:focus { border-color:var(--magenta); }
+.rf-field textarea { resize:vertical; }
+
+/* STAR PICKER */
+.star-picker { display:flex;gap:.3rem;margin:.4rem 0; }
+.sp-star { font-size:2rem;color:#ddd;cursor:pointer;transition:color .15s,transform .15s;user-select:none; }
+.sp-star:hover,.sp-star.active { color:var(--gold);transform:scale(1.2); }
+.star-label { font-size:.75rem;color:#aaa;margin-top:.2rem;min-height:1.2em; }
+
+.btn-review-submit { background:linear-gradient(135deg,var(--magenta),var(--saffron));color:#fff;border:none;cursor:pointer;padding:.9rem 2.4rem;border-radius:3rem;font-family:var(--font-b);font-size:.88rem;font-weight:600;box-shadow:0 6px 24px rgba(233,30,140,.35);transition:transform .2s,box-shadow .2s;margin-top:.5rem; }
+.btn-review-submit:hover { transform:translateY(-2px);box-shadow:0 10px 32px rgba(233,30,140,.5); }
+.rv-success { display:none;margin-top:1rem;background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:1px solid #86efac;border-radius:.8rem;padding:.9rem 1.2rem;color:#166534;font-size:.85rem;font-weight:600; }
+
+/* COMBO OFFERS */
+#combos { padding:6rem 3rem; background:linear-gradient(160deg,#1a0533 0%,#2d0a5e 50%,#1a0533 100%); position:relative; overflow:hidden; }
+#combos::before { content:''; position:absolute; top:0; left:0; right:0; height:6px; background:linear-gradient(90deg,var(--gold),var(--saffron),var(--magenta),var(--purple)); }
+#combos::after { content:''; position:absolute; bottom:-150px; left:-150px; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle,rgba(245,166,35,.1),transparent 65%); }
+#combos .sec-title { color:#fff; }
+#combos .sec-sub { color:rgba(255,255,255,.5); }
+.combo-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.8rem; margin-top:1rem; position:relative; z-index:1; }
+.combo-card {
+  background:rgba(255,255,255,.06); border:1.5px solid rgba(255,255,255,.1);
+  border-radius:1.5rem; padding:2rem 1.6rem; position:relative; overflow:hidden;
+  display:flex; flex-direction:column; gap:.6rem;
+  transition:transform .3s, box-shadow .3s, border-color .3s;
+}
+.combo-card:hover { transform:translateY(-8px); box-shadow:0 24px 60px rgba(233,30,140,.2); border-color:rgba(233,30,140,.4); }
+.combo-card.featured { background:linear-gradient(160deg,rgba(233,30,140,.18),rgba(124,58,237,.18)); border-color:rgba(233,30,140,.5); box-shadow:0 12px 40px rgba(233,30,140,.2); }
+.combo-badge {
+  position:absolute; top:1rem; right:1rem;
+  background:linear-gradient(135deg,var(--gold),var(--saffron));
+  color:#fff; font-size:.68rem; font-weight:800; padding:.3rem .8rem;
+  border-radius:2rem; letter-spacing:.08em; box-shadow:0 4px 12px rgba(245,166,35,.4);
+  animation: badgePulse 2s ease-in-out infinite;
+}
+@keyframes badgePulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
+.combo-popular { background:linear-gradient(135deg,var(--magenta),var(--purple)); color:#fff; font-size:.65rem; font-weight:700; padding:.25rem .8rem; border-radius:2rem; width:fit-content; letter-spacing:.06em; margin-bottom:.3rem; }
+.combo-icon { font-size:2.4rem; margin-bottom:.2rem; }
+.combo-name { font-family:var(--font-h); font-size:1.15rem; font-weight:700; color:#fff; }
+.combo-desc { font-size:.78rem; color:rgba(255,255,255,.55); line-height:1.6; }
+.combo-includes { list-style:none; display:flex; flex-direction:column; gap:.4rem; margin:.4rem 0; flex:1; }
+.combo-includes li { font-size:.8rem; color:rgba(255,255,255,.8); display:flex; align-items:center; gap:.5rem; padding:.35rem .6rem; background:rgba(255,255,255,.05); border-radius:.5rem; }
+.combo-pricing { display:flex; align-items:center; gap:.8rem; margin-top:.5rem; }
+.combo-orig { font-size:.9rem; color:rgba(255,255,255,.35); text-decoration:line-through; }
+.combo-price { font-family:var(--font-h); font-size:1.5rem; font-weight:700; background:linear-gradient(135deg,var(--gold),var(--rose)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.combo-btn { display:block; text-align:center; text-decoration:none; background:linear-gradient(135deg,var(--magenta),var(--saffron)); color:#fff; padding:.7rem 1.4rem; border-radius:3rem; font-size:.82rem; font-weight:600; box-shadow:0 6px 20px rgba(233,30,140,.35); transition:transform .2s,box-shadow .2s; margin-top:.3rem; }
+.combo-btn:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(233,30,140,.5); }
+#contact { padding:6rem 3rem;background:linear-gradient(135deg,var(--deep),#2d0a5e 50%,#1a0533);position:relative;overflow:hidden; }
+#contact::before { content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.12),transparent 65%); }
+#contact .sec-title { color:#fff; }
+#contact .sec-sub { color:rgba(255,255,255,.5); }
+.ct-wrap { display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;margin-top:3.5rem;position:relative;z-index:1; }
+.ic-list { display:flex;flex-direction:column;gap:1.2rem; }
+.ic { background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:1.2rem;padding:1.4rem 1.6rem;display:flex;align-items:flex-start;gap:1rem;transition:background .2s,border-color .2s; }
+.ic:hover { background:rgba(255,255,255,.12);border-color:rgba(233,30,140,.4); }
+.ic-icon { width:44px;height:44px;border-radius:.8rem;flex-shrink:0;background:linear-gradient(135deg,var(--magenta),var(--saffron));display:flex;align-items:center;justify-content:center;font-size:1.2rem; }
+.ic-lbl { font-size:.68rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem; }
+.ic-val { font-size:.9rem;color:rgba(255,255,255,.85);line-height:1.5; }
+.hours-g { display:grid;grid-template-columns:1fr 1fr;gap:.3rem;margin-top:.3rem; }
+.hr { font-size:.78rem;display:flex;justify-content:space-between;color:rgba(255,255,255,.6); }
+.hr strong { color:rgba(255,255,255,.85);font-weight:500; }
+.form-card { background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:1.5rem;padding:2.5rem; }
+.form-title { font-family:var(--font-h);font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:.4rem; }
+.form-sub { font-size:.82rem;color:rgba(255,255,255,.5);margin-bottom:2rem; }
+.f-row { display:grid;grid-template-columns:1fr 1fr;gap:1rem; }
+.f-field { display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem; }
+.f-field label { font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5); }
+.f-field input,.f-field select,.f-field textarea { background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.12);border-radius:.7rem;padding:.85rem 1rem;color:#fff;font-family:var(--font-b);font-size:.88rem;outline:none;transition:border-color .2s,background .2s; }
+.f-field input:focus,.f-field select:focus,.f-field textarea:focus { border-color:var(--magenta);background:rgba(233,30,140,.08); }
+.f-field input::placeholder,.f-field textarea::placeholder { color:rgba(255,255,255,.3); }
+.f-field select option { background:#1a0533; }
+.f-field textarea { resize:vertical;min-height:90px; }
+.btn-sub { width:100%;border:none;cursor:pointer;background:linear-gradient(135deg,var(--magenta),var(--saffron));color:#fff;padding:1rem;border-radius:3rem;font-family:var(--font-b);font-size:.9rem;font-weight:600;box-shadow:0 8px 30px rgba(233,30,140,.4);transition:transform .2s,box-shadow .2s;margin-top:.5rem; }
+.btn-sub:hover { transform:translateY(-3px);box-shadow:0 14px 40px rgba(233,30,140,.55); }
+
+/* SOCIAL MEDIA SECTION */
+#social { padding:5rem 3rem; background:linear-gradient(160deg,#fff8ff 0%,#fce4f3 50%,#ede8ff 100%); position:relative; overflow:hidden; }
+#social::before { content:''; position:absolute; top:0; left:0; right:0; height:6px; background:linear-gradient(90deg,#e1306c,#833ab4,#fd1d1d,#fcb045); }
+.social-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.8rem; margin-top:3rem; }
+.social-card.facebook { background:linear-gradient(135deg,#1877f2,#0a5dc2); box-shadow:0 8px 30px rgba(24,119,242,.3); }
+.social-card {
+  border-radius:1.5rem; padding:2.2rem 1.8rem; text-align:center;
+  text-decoration:none; display:flex; flex-direction:column; align-items:center; gap:1rem;
+  transition:transform .3s, box-shadow .3s; position:relative; overflow:hidden;
+}
+.social-card:hover { transform:translateY(-8px); }
+.social-card.insta { background:linear-gradient(135deg,#833ab4,#e1306c,#fcb045); box-shadow:0 8px 30px rgba(225,48,108,.3); }
+.social-card.whatsapp { background:linear-gradient(135deg,#25d366,#128c7e); box-shadow:0 8px 30px rgba(37,211,102,.3); }
+.social-card.owner { background:linear-gradient(135deg,var(--deep),#7c3aed); box-shadow:0 8px 30px rgba(124,58,237,.3); }
+.social-icon { font-size:2.8rem; }
+.social-name { font-family:var(--font-h); font-size:1.2rem; font-weight:700; color:#fff; }
+.social-handle { font-size:.78rem; color:rgba(255,255,255,.8); }
+.social-btn { background:rgba(255,255,255,.2); border:1.5px solid rgba(255,255,255,.5); color:#fff; padding:.5rem 1.4rem; border-radius:2rem; font-size:.78rem; font-weight:600; margin-top:.3rem; transition:background .2s; }
+.social-card:hover .social-btn { background:rgba(255,255,255,.35); }
+
+/* WHATSAPP FLOAT */
+.wa-float {
+  position: fixed; bottom: 28px; right: 28px; z-index: 1000;
+  display: flex; flex-direction: column; align-items: flex-end; gap: .6rem;
+}
+.wa-btn {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; font-size: 1.8rem;
+  box-shadow: 0 6px 28px rgba(37,211,102,.5);
+  animation: waPulse 2s ease-in-out infinite;
+  transition: transform .2s;
+}
+.wa-btn:hover { transform: scale(1.12); }
+@keyframes waPulse {
+  0%,100%{ box-shadow: 0 6px 28px rgba(37,211,102,.5); }
+  50%{ box-shadow: 0 6px 40px rgba(37,211,102,.8), 0 0 0 10px rgba(37,211,102,.1); }
+}
+.wa-tooltip {
+  background: #fff; color: var(--deep); font-size:.75rem; font-weight:600;
+  padding:.4rem .9rem; border-radius:2rem; box-shadow:0 4px 16px rgba(0,0,0,.12);
+  white-space:nowrap; opacity:0; transform:translateX(10px);
+  transition:opacity .2s, transform .2s;
+}
+.wa-float:hover .wa-tooltip { opacity:1; transform:translateX(0); }
+
+/* FOOTER */
+footer { background:#0d021f;padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem; }
+.f-logo { font-family:var(--font-h);font-size:1.3rem;color:rgba(255,255,255,.6);text-decoration:none; }
+.f-logo span { color:var(--gold); }
+footer p { font-size:.78rem;color:rgba(255,255,255,.35); }
+.f-links { display:flex;gap:1.6rem;list-style:none; }
+.f-links a { color:rgba(255,255,255,.4);text-decoration:none;font-size:.78rem;transition:color .2s; }
+.f-links a:hover { color:var(--gold); }
+.f-owner { font-size:.78rem; color:rgba(255,255,255,.4); }
+.f-owner span { color:var(--rose); }
+
+/* REVEAL */
+.reveal { opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease; }
+.reveal.up { opacity:1;transform:translateY(0); }
+
+/* RESPONSIVE */
+@media(max-width:1100px){.svc-grid{grid-template-columns:repeat(2,1fr)}#home{grid-template-columns:1fr}.hero-right{display:none}.hero-left{padding:7rem 2rem 3rem}.social-grid{grid-template-columns:1fr 1fr}.combo-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.gal-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}.g-item:nth-child(1){grid-row:auto}.g-item:nth-child(5){grid-column:auto}.testi-grid{grid-template-columns:1fr}.ct-wrap{grid-template-columns:1fr;gap:2.5rem}.f-row{grid-template-columns:1fr}.rf-row{grid-template-columns:1fr}.rating-summary{flex-direction:column;gap:1rem}}
+@media(max-width:768px){nav{padding:1rem 1.5rem}.nav-links{display:none}.hamburger{display:flex}#services,#gallery,#testimonials,#contact,#social,#combos{padding:4rem 1.5rem}.svc-grid{grid-template-columns:1fr}.gal-grid{grid-template-columns:1fr}.social-grid{grid-template-columns:1fr}.combo-grid{grid-template-columns:1fr}footer{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- WhatsApp Floating Button -->
+<div class="wa-float">
+  <div class="wa-tooltip">Chat on WhatsApp 💬</div>
+  <a href="https://wa.me/919754682501" target="_blank" class="wa-btn" title="Chat on WhatsApp">💬</a>
+</div>
+
+<!-- Petals -->
+<div class="petal" style="left:5%;animation-duration:12s;animation-delay:0s;">🌸</div>
+<div class="petal" style="left:22%;animation-duration:15s;animation-delay:3s;">🌺</div>
+<div class="petal" style="left:42%;animation-duration:11s;animation-delay:6s;">✨</div>
+<div class="petal" style="left:63%;animation-duration:14s;animation-delay:1s;">🌷</div>
+<div class="petal" style="left:82%;animation-duration:13s;animation-delay:4s;">💐</div>
+<div class="petal" style="left:93%;animation-duration:16s;animation-delay:8s;">🌸</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo-wrap">
+    <a href="#home" class="logo-text" style="display:flex;align-items:center;gap:.8rem;text-decoration:none;">
+      <!-- Bride Photo Logo -->
+      <div class="bride-photo-logo">
+        <img src="data:image/jpeg;base64,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" alt="Indian Bride" class="bride-photo-img"/>
+        <div class="bride-photo-ring"></div>
+      </div>
+      <div>
+        <span class="logo-main">Aakarshan</span>
+        <span class="logo-sub">✦ Beauty Parlour ✦</span>
+      </div>
+    </a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#combos">Combos 🎁</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#social">Follow Us</a></li>
+    <li><a href="#contact" class="nav-book">Book Now ✨</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-left">
+    <div class="hero-badge">✨ Seoni's Premier Beauty Parlour</div>
+    <h1 class="hero-h1">
+      Feel Your Best,<br>
+      <span class="grad">Look Stunning</span>
+    </h1>
+    <p class="hero-sub">Aakarshan Beauty Parlour brings the art of Indian beauty to life — from radiant bridal makeovers to expert hair, skin & threading treatments. Led by <strong style="color:var(--gold)">Sangeeta Sanodiya</strong>.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/919754682501" target="_blank" class="btn-glow">💬 WhatsApp Us</a>
+      <a href="#services" class="btn-ghost">Explore Services →</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-n">10+</div><div class="stat-l">Years of Experience</div></div>
+      <div><div class="stat-n">2K+</div><div class="stat-l">Happy Clients</div></div>
+      <div><div class="stat-n">4.9⭐</div><div class="stat-l">Avg Rating</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-frame">
+      <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=700&q=85" alt="Indian Bridal Beauty">
+      <div class="hero-float f1"><div class="hf-icon">💍</div><div class="hf-text"><strong>Bridal Expert</strong><span>500+ Brides</span></div></div>
+      <div class="hero-float f2"><div class="hf-icon">🌟</div><div class="hf-text"><strong>Top Rated</strong><span>Seoni, MP</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <span class="marquee-item">💄 Bridal Makeup<span class="mdot"></span></span>
+    <span class="marquee-item">✂️ Hair Styling<span class="mdot"></span></span>
+    <span class="marquee-item">🌿 Facials & Glow<span class="mdot"></span></span>
+    <span class="marquee-item">🌸 Waxing & Threading<span class="mdot"></span></span>
+    <span class="marquee-item">✨ Keratin Treatment<span class="mdot"></span></span>
+    <span class="marquee-item">💅 Nail Art<span class="mdot"></span></span>
+    <span class="marquee-item">👰 Engagement Looks<span class="mdot"></span></span>
+    <span class="marquee-item">💆 Relaxing Massage<span class="mdot"></span></span>
+    <span class="marquee-item">💄 Bridal Makeup<span class="mdot"></span></span>
+    <span class="marquee-item">✂️ Hair Styling<span class="mdot"></span></span>
+    <span class="marquee-item">🌿 Facials & Glow<span class="mdot"></span></span>
+    <span class="marquee-item">🌸 Waxing & Threading<span class="mdot"></span></span>
+    <span class="marquee-item">✨ Keratin Treatment<span class="mdot"></span></span>
+    <span class="marquee-item">💅 Nail Art<span class="mdot"></span></span>
+    <span class="marquee-item">👰 Engagement Looks<span class="mdot"></span></span>
+    <span class="marquee-item">💆 Relaxing Massage<span class="mdot"></span></span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="sec-header reveal">
+    <div class="sec-tag">💎 What We Offer</div>
+    <h2 class="sec-title">Our <em>Signature</em> Services</h2>
+    <p class="sec-sub">Every treatment is tailored to celebrate your unique beauty using premium products and expert hands.</p>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-card c1 reveal">
+      <div class="svc-icon">✂️</div>
+      <div class="svc-name">Hair Styling & Cuts</div>
+      <p class="svc-desc">Precision cuts, bold colours, and silky smooth treatments for every hair type.</p>
+      <ul class="svc-list">
+        <li><span>Haircut & Styling</span><span class="ptag">₹200</span></li>
+        <li><span>Hair Colour / Highlights</span><span class="ptag">₹1000+</span></li>
+        <li><span>Temporary Straightening</span><span class="ptag">₹100</span></li>
+        <li><span>Hairstyle</span><span class="ptag">₹200</span></li>
+        <li><span>Hair Smoothening</span><span class="ptag">₹1500+</span></li>
+        <li><span>Keratin Treatment</span><span class="ptag">₹2000+</span></li>
+      </ul>
+    </div>
+    <div class="svc-card c2 reveal">
+      <div class="svc-icon">🌿</div>
+      <div class="svc-name">Facials & Skincare</div>
+      <p class="svc-desc">Restore your skin's natural glow with signature facials and deep skincare rituals.</p>
+      <ul class="svc-list">
+        <li><span>Classic Facial</span><span class="ptag">₹600+</span></li>
+        <li><span>Gold Radiance Facial</span><span class="ptag">₹500+</span></li>
+        <li><span>HydraFacial</span><span class="ptag">₹800+</span></li>
+        <li><span>Tan Removal Pack</span><span class="ptag">₹350</span></li>
+      </ul>
+    </div>
+    <div class="svc-card c3 reveal">
+      <div class="svc-icon">💄</div>
+      <div class="svc-name">Makeup & Bridal</div>
+      <p class="svc-desc">Flawless, long-lasting makeup for every occasion — parties to grand Indian weddings.</p>
+      <ul class="svc-list">
+        <li><span>Party Makeup</span><span class="ptag">₹700</span></li>
+        <li><span>Bridal Makeup</span><span class="ptag">₹5000+</span></li>
+        <li><span>Airbrush Makeup</span><span class="ptag">₹1800+</span></li>
+        <li><span>Engagement Look</span><span class="ptag">₹2000</span></li>
+      </ul>
+    </div>
+    <div class="svc-card c4 reveal">
+      <div class="svc-icon">🌸</div>
+      <div class="svc-name">Waxing & Threading</div>
+      <p class="svc-desc">Gentle, effective hair removal using premium wax for silky smooth skin.</p>
+      <ul class="svc-list">
+        <li><span>Full Body Wax</span><span class="ptag">₹700</span></li>
+        <li><span>Rica Full Hand Wax</span><span class="ptag">₹300</span></li>
+        <li><span>Rica Full Leg Wax</span><span class="ptag">₹600</span></li>
+        <li><span>Eyebrow Threading</span><span class="ptag">₹40</span></li>
+        <li><span>Full Face Threading</span><span class="ptag">₹80</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMBO OFFERS -->
+<section id="combos">
+  <div class="sec-header reveal">
+    <div class="sec-tag">🎁 Special Combos</div>
+    <h2 class="sec-title">Combo <em>Packages</em></h2>
+    <p class="sec-sub">Get more, save more! Enjoy 10% off on our handpicked beauty combo packages.</p>
+  </div>
+  <div class="combo-grid">
+
+    <!-- Combo 1 -->
+    <div class="combo-card reveal">
+      <div class="combo-badge">10% OFF</div>
+      <div class="combo-icon">👰</div>
+      <div class="combo-name">Bridal Glow Package</div>
+      <p class="combo-desc">Complete bridal prep for your big day — look absolutely radiant from head to toe.</p>
+      <ul class="combo-includes">
+        <li>💄 Bridal Makeup</li>
+        <li>🌿 Gold Radiance Facial</li>
+        <li>🌸 Full Body Wax</li>
+        <li>✂️ Hairstyle</li>
+      </ul>
+      <div class="combo-pricing">
+        <span class="combo-orig">₹6,400</span>
+        <span class="combo-price">₹5,760</span>
+      </div>
+      <a href="#contact" class="combo-btn">Book Now ✨</a>
+    </div>
+
+    <!-- Combo 2 -->
+    <div class="combo-card reveal featured">
+      <div class="combo-badge">10% OFF</div>
+      <div class="combo-popular">⭐ Most Popular</div>
+      <div class="combo-icon">✨</div>
+      <div class="combo-name">Party Ready Package</div>
+      <p class="combo-desc">Get glammed up for any party or special occasion with our all-in-one beauty combo.</p>
+      <ul class="combo-includes">
+        <li>💄 Party Makeup</li>
+        <li>🌿 Classic Facial</li>
+        <li>🌸 Full Face Threading</li>
+        <li>✂️ Haircut & Styling</li>
+      </ul>
+      <div class="combo-pricing">
+        <span class="combo-orig">₹1,600</span>
+        <span class="combo-price">₹1,440</span>
+      </div>
+      <a href="#contact" class="combo-btn">Book Now ✨</a>
+    </div>
+
+    <!-- Combo 3 -->
+    <div class="combo-card reveal">
+      <div class="combo-badge">10% OFF</div>
+      <div class="combo-icon">💆</div>
+      <div class="combo-name">Skin & Hair Refresh</div>
+      <p class="combo-desc">Rejuvenate your skin and hair with our relaxing treatment combo for an everyday glow.</p>
+      <ul class="combo-includes">
+        <li>🌿 Classic Facial</li>
+        <li>✂️ Haircut & Styling</li>
+        <li>🌸 Eyebrow Threading</li>
+        <li>🌿 Tan Removal Pack</li>
+      </ul>
+      <div class="combo-pricing">
+        <span class="combo-orig">₹1,190</span>
+        <span class="combo-price">₹1,071</span>
+      </div>
+      <a href="#contact" class="combo-btn">Book Now ✨</a>
+    </div>
+
+    <!-- Combo 4 -->
+    <div class="combo-card reveal">
+      <div class="combo-badge">10% OFF</div>
+      <div class="combo-icon">💍</div>
+      <div class="combo-name">Engagement Special</div>
+      <p class="combo-desc">Look picture-perfect for your engagement ceremony with this complete beauty package.</p>
+      <ul class="combo-includes">
+        <li>💄 Engagement Look Makeup</li>
+        <li>✂️ Hairstyle</li>
+        <li>🌿 Gold Radiance Facial</li>
+        <li>🌸 Full Face Threading</li>
+      </ul>
+      <div class="combo-pricing">
+        <span class="combo-orig">₹2,780</span>
+        <span class="combo-price">₹2,502</span>
+      </div>
+      <a href="#contact" class="combo-btn">Book Now ✨</a>
+    </div>
+
+  </div>
+</section>
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-box">
+    <div style="font-size:2rem;margin-bottom:.5rem;">🔐</div>
+    <h3>Admin Login</h3>
+    <p>Enter your password to manage gallery photos</p>
+    <input class="modal-input" type="password" id="adminPassInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkLogin()">
+    <div class="modal-err" id="loginErr">❌ Incorrect password. Try again.</div>
+    <button class="btn-modal-login" onclick="checkLogin()">Login →</button><br>
+    <button class="btn-modal-cancel" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="sec-header reveal" style="position:relative;z-index:1;">
+    <div class="sec-tag">📸 Our Work</div>
+    <h2 class="sec-title">Beauty in Every <em style="color:var(--rose)">Detail</em></h2>
+    <p class="sec-sub">Real transformations by our expert team — every look tells a story.</p>
+  </div>
+
+  <!-- Admin bar -->
+  <div class="gal-admin-bar">
+    <button class="btn-admin-toggle" id="adminToggleBtn" onclick="handleAdminToggle()">🔐 Owner Login</button>
+    <span id="adminStatus" style="color:rgba(255,255,255,.4);font-size:.75rem;display:none;"></span>
+  </div>
+
+  <!-- Upload Panel (shown when admin logged in) -->
+  <div class="upload-panel" id="uploadPanel">
+    <div class="upload-drop" id="dropZone" onclick="document.getElementById('fileInput').click()" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFiles(event)">
+      <div class="upload-drop-icon">🖼️</div>
+      <p>Drag & drop photos here</p>
+      <span>or click to browse from your phone/computer</span>
+      <input type="file" id="fileInput" accept="image/*" multiple onchange="handleFiles(this.files)">
+      <label class="upload-label" onclick="event.stopPropagation();" for="fileInput">📂 Choose Photos</label>
+    </div>
+    <div class="upload-preview" id="uploadPreview"></div>
+    <div class="upload-caption-row" id="captionRow" style="display:none;">
+      <input type="text" id="captionInput" placeholder="Caption (e.g. Bridal Makeup)" maxlength="40">
+      <input type="text" id="subcaptionInput" placeholder="Sub-caption (e.g. Traditional Look)" maxlength="40">
+      <button class="btn-upload-add" onclick="addToGallery()">✅ Add to Gallery</button>
+    </div>
+  </div>
+
+  <div class="gal-grid" id="galGrid"></div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="sec-header reveal">
+    <div class="sec-tag">💬 Client Love</div>
+    <h2 class="sec-title">What Our Clients <em>Say</em></h2>
+    <p class="sec-sub">Real stories from real women who walked out absolutely glowing.</p>
+  </div>
+
+  <!-- Overall Rating Summary -->
+  <div class="rating-summary reveal">
+    <div class="rs-score" id="rsSore">5.0</div>
+    <div class="rs-right">
+      <div class="rs-stars" id="rsStars">★★★★★</div>
+      <div class="rs-count" id="rsCount">Based on 3 reviews</div>
+      <div class="rs-bars" id="rsBars"></div>
+    </div>
+  </div>
+
+  <!-- Reviews Grid -->
+  <div class="testi-grid" id="reviewsGrid">
+    <div class="tcard reveal">
+      <div class="t-badge">Verified ✓</div>
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">I had my bridal makeup done at Aakarshan and I looked absolutely stunning! The team understood exactly what I wanted. My guests couldn't stop complimenting me all day!</p>
+      <div class="t-author">
+        <div class="t-av">P</div>
+        <div><div class="t-name">Priya Sharma</div><div class="t-loc">📍 Seoni, Madhya Pradesh</div></div>
+      </div>
+    </div>
+    <div class="tcard reveal">
+      <div class="t-badge">Verified ✓</div>
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">The HydraFacial here completely transformed my skin! The staff is so warm and welcoming. I've been a regular for 3 years and the quality never disappoints.</p>
+      <div class="t-author">
+        <div class="t-av">A</div>
+        <div><div class="t-name">Ananya Reddy</div><div class="t-loc">📍 Seoni, Madhya Pradesh</div></div>
+      </div>
+    </div>
+    <div class="tcard reveal">
+      <div class="t-badge">Verified ✓</div>
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">Best hair colour I've ever had! They recommended the perfect shade and the keratin treatment left my hair silky smooth for months. Absolutely love this place!</p>
+      <div class="t-author">
+        <div class="t-av">S</div>
+        <div><div class="t-name">Sneha Kulkarni</div><div class="t-loc">📍 Seoni, Madhya Pradesh</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Write a Review Form -->
+  <div class="review-form-wrap reveal">
+    <div class="review-form-box">
+      <div class="rf-title">⭐ Leave Your Review</div>
+      <div class="rf-sub">Share your experience at Aakarshan Beauty Parlour</div>
+      <div class="rf-row">
+        <div class="rf-field">
+          <label>Your Name *</label>
+          <input type="text" id="rvName" placeholder="e.g. Priya Sharma" maxlength="40">
+        </div>
+        <div class="rf-field">
+          <label>Location</label>
+          <input type="text" id="rvLoc" placeholder="e.g. Seoni, MP" maxlength="40">
+        </div>
+      </div>
+      <div class="rf-field">
+        <label>Your Rating *</label>
+        <div class="star-picker" id="starPicker">
+          <span class="sp-star" data-val="1">★</span>
+          <span class="sp-star" data-val="2">★</span>
+          <span class="sp-star" data-val="3">★</span>
+          <span class="sp-star" data-val="4">★</span>
+          <span class="sp-star" data-val="5">★</span>
+        </div>
+        <div class="star-label" id="starLabel">Tap a star to rate</div>
+      </div>
+      <div class="rf-field">
+        <label>Your Review *</label>
+        <textarea id="rvText" placeholder="Tell us about your experience..." rows="3" maxlength="300"></textarea>
+      </div>
+      <button class="btn-review-submit" onclick="submitReview()">✨ Submit Review</button>
+      <div class="rv-success" id="rvSuccess">🎉 Thank you! Your review has been posted.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL MEDIA SECTION -->
+<section id="social">
+  <div class="sec-header reveal">
+    <div class="sec-tag">📱 Connect With Us</div>
+    <h2 class="sec-title">Follow Our <em>Beauty Journey</em></h2>
+    <p class="sec-sub">Stay updated with our latest looks, offers and transformations. Connect with us on social media!</p>
+  </div>
+  <div class="social-grid">
+    <a href="https://www.instagram.com/sangeeta_sanodia?igsh=ZTFnYzA3YzU5Z3pk" target="_blank" class="social-card insta reveal">
+      <div class="social-icon">📸</div>
+      <div class="social-name">Instagram</div>
+      <div class="social-handle">@sangeeta_sanodia</div>
+      <div class="social-btn">Follow Us →</div>
+    </a>
+    <a href="https://www.facebook.com/share/1LJJJuCVN2/?mibextid=wwXIfr" target="_blank" class="social-card facebook reveal">
+      <div class="social-icon">📘</div>
+      <div class="social-name">Facebook</div>
+      <div class="social-handle">Aakarshan Beauty Parlour</div>
+      <div class="social-btn">Like Our Page →</div>
+    </a>
+    <a href="https://wa.me/919754682501" target="_blank" class="social-card whatsapp reveal">
+      <div class="social-icon">💬</div>
+      <div class="social-name">WhatsApp</div>
+      <div class="social-handle">+91 97546 82501</div>
+      <div class="social-btn">Chat Now →</div>
+    </a>
+    <div class="social-card owner reveal" style="cursor:default;">
+      <div class="social-icon">👩‍🎨</div>
+      <div class="social-name">Sangeeta Sanodiya</div>
+      <div class="social-handle">Owner & Lead Artist</div>
+      <div class="social-btn" style="background:rgba(255,255,255,.15);">Aakarshan Beauty Parlour</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-header reveal" style="position:relative;z-index:1;">
+    <div class="sec-tag">📅 Get In Touch</div>
+    <h2 class="sec-title">Book Your <em style="color:var(--rose)">Appointment</em></h2>
+    <p class="sec-sub">Reserve your slot and step into a world of colour, care and confidence.</p>
+  </div>
+  <div class="ct-wrap">
+    <div class="ic-list reveal">
+      <div class="ic">
+        <div class="ic-icon">📍</div>
+        <div>
+          <div class="ic-lbl">Our Location</div>
+          <div class="ic-val">
+            Aakarshan Beauty Parlour<br>Rani Durgawati Ward, Chhindwara Road<br>Seoni, Madhya Pradesh 480661<br>India<br>
+            <a href="https://maps.app.goo.gl/YbPvMuKV1jF5Auve6?g_st=aw" target="_blank" style="color:var(--gold);text-decoration:none;font-size:.82rem;">📍 Open in Google Maps →</a>
+          </div>
+        </div>
+      </div>
+      <div class="ic">
+        <div class="ic-icon">📞</div>
+        <div>
+          <div class="ic-lbl">Call / WhatsApp</div>
+          <div class="ic-val">
+            <a href="tel:+919754682501" style="color:inherit;text-decoration:none;">+91 97546 82501</a><br>
+            <a href="https://wa.me/919754682501" target="_blank" style="color:var(--gold);text-decoration:none;font-size:.82rem;">💬 Chat on WhatsApp →</a>
+          </div>
+        </div>
+      </div>
+      <div class="ic">
+        <div class="ic-icon">📸</div>
+        <div>
+          <div class="ic-lbl">Instagram</div>
+          <div class="ic-val">
+            <a href="https://www.instagram.com/sangeeta_sanodia?igsh=ZTFnYzA3YzU5Z3pk" target="_blank" style="color:var(--rose);text-decoration:none;">@sangeeta_sanodia →</a>
+          </div>
+        </div>
+      </div>
+      <div class="ic">
+        <div class="ic-icon">🕐</div>
+        <div>
+          <div class="ic-lbl">Opening Hours</div>
+          <div class="hours-g">
+            <div class="hr"><strong>Mon – Fri</strong><span>9am – 8pm</span></div>
+            <div class="hr"><strong>Saturday</strong><span>8am – 9pm</span></div>
+            <div class="hr"><strong>Sunday</strong><span>10am – 6pm</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-card reveal">
+      <div class="form-title">Book an Appointment ✨</div>
+      <div class="form-sub">Fill in your details and we'll confirm your slot within 2 hours.</div>
+      <form onsubmit="submitForm(event)">
+        <div class="f-row">
+          <div class="f-field"><label>Full Name</label><input type="text" placeholder="Your name" required></div>
+          <div class="f-field"><label>Phone Number</label><input type="tel" placeholder="+91 00000 00000" required></div>
+        </div>
+        <div class="f-row">
+          <div class="f-field">
+            <label>Service</label>
+            <select required>
+              <option value="" disabled selected>Choose a service</option>
+              <option>✂️ Hair Styling & Cuts</option>
+              <option>🌿 Facials & Skincare</option>
+              <option>💄 Makeup & Bridal</option>
+              <option>🌸 Waxing & Threading</option>
+            </select>
+          </div>
+        <div class="f-row">
+          <div class="f-field">
+            <label>Preferred Date</label>
+            <input type="date" required>
+          </div>
+          <div class="f-field">
+            <label>Preferred Time</label>
+            <select required>
+              <option value="" disabled selected>Choose a time slot</option>
+              <option>🕘 9:00 AM - 10:00 AM</option>
+              <option>🕙 10:00 AM - 11:00 AM</option>
+              <option>🕚 11:00 AM - 12:00 PM</option>
+              <option>🕛 12:00 PM - 1:00 PM</option>
+              <option>🕑 2:00 PM - 3:00 PM</option>
+              <option>🕒 3:00 PM - 4:00 PM</option>
+              <option>🕓 4:00 PM - 5:00 PM</option>
+              <option>🕔 5:00 PM - 6:00 PM</option>
+              <option>🕕 6:00 PM - 7:00 PM</option>
+              <option>🕖 7:00 PM - 8:00 PM</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-field"><label>Special Requests</label><textarea placeholder="Any special requests, skin type info, or occasion details..."></textarea></div>
+        <button type="submit" class="btn-sub" id="subBtn">✨ Request Appointment</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#home" class="f-logo">Aakarshan <span>Beauty Parlour</span></a>
+  <div>
+    <p>© 2025 Aakarshan Beauty Parlour, Seoni, Madhya Pradesh. All rights reserved.</p>
+    <p class="f-owner">Owner: <span>Sangeeta Sanodiya</span></p>
+  </div>
+  <ul class="f-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#social">Follow Us</a></li>
+    <li><a href="#contact">Book</a></li>
+  </ul>
+</footer>
+
+<script>
+// Custom cursor
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX+'px'; cur.style.top = e.clientY+'px';
+});
+document.querySelectorAll('a,button,.svc-card,.g-item,.tcard,.social-card').forEach(el => {
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+});
+
+// Scroll reveal
+const ro = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const sibs=[...entry.target.parentElement.querySelectorAll('.reveal:not(.up)')];
+      setTimeout(()=>entry.target.classList.add('up'), sibs.indexOf(entry.target)*110);
+      ro.unobserve(entry.target);
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// Mobile nav
+function toggleNav(){
+  const nl=document.querySelector('.nav-links');
+  if(nl.style.display==='flex'){nl.style.display='none';}
+  else{nl.style.cssText='display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#1a0533;padding:1.5rem 2rem;gap:1.2rem;';}
+}
+
+// Form submit - sends to WhatsApp
+function submitForm(e){
+  e.preventDefault();
+  const name     = document.querySelector('#contact input[type="text"]').value.trim();
+  const phone    = document.querySelector('#contact input[type="tel"]').value.trim();
+  const selects  = document.querySelectorAll('#contact select');
+  const service  = selects[0].value;
+  const date     = document.querySelector('#contact input[type="date"]').value;
+  const time     = selects[1].value;
+  const notes    = document.querySelector('#contact textarea').value.trim();
+
+  const msg =
+`🌸 *New Appointment Request*
+*Aakarshan Beauty Parlour*
+
+👤 *Name:* ${name}
+📞 *Phone:* ${phone}
+💄 *Service:* ${service}
+📅 *Date:* ${date}
+⏰ *Time:* ${time}
+📝 *Notes:* ${notes || 'None'}
+
+_Sent from website booking form_`;
+
+  const encoded = encodeURIComponent(msg);
+  const waURL = `https://wa.me/919754682501?text=${encoded}`;
+
+  const btn = document.getElementById('subBtn');
+  btn.textContent = '✅ Redirecting to WhatsApp...';
+  btn.style.background = 'linear-gradient(135deg,#25d366,#128c7e)';
+
+  setTimeout(() => {
+    window.open(waURL, '_blank');
+    btn.textContent = '✨ Request Appointment';
+    btn.style.background = '';
+    e.target.reset();
+  }, 800);
+}
+
+// ===================== GALLERY SYSTEM =====================
+const ADMIN_PASS = 'sangeeta2025';
+const STORAGE_KEY = 'aakarshan_gallery_v1';
+let isAdmin = false;
+let pendingFiles = [];
+
+const defaultPhotos = [
+  { src:'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600&q=85', lbl:'Indian Bridal Look', sub:'Traditional Bridal Makeup', isDefault:true },
+  { src:'https://images.unsplash.com/photo-1617870952348-7524edfb61b7?w=600&q=85', lbl:'Bridal Mehndi & Jewellery', sub:'Wedding Glam', isDefault:true },
+  { src:'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400&q=85&crop=faces&fit=crop', lbl:'Glow Facial', sub:'Skincare Treatment', isDefault:true },
+  { src:'https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?w=600&q=85', lbl:'Perfect Brows', sub:'Threading & Shaping', isDefault:true },
+  { src:'https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=900&q=85', lbl:'Makeup Artistry', sub:'Professional Bridal Look', isDefault:true }
+];
+
+function loadGalleryData() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  } catch(e) { return []; }
+}
+
+function saveGalleryData(data) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+function renderGallery() {
+  const grid = document.getElementById('galGrid');
+  const uploadedPhotos = loadGalleryData();
+  const allPhotos = [...defaultPhotos, ...uploadedPhotos];
+  grid.innerHTML = '';
+  if(allPhotos.length > 5) grid.classList.add('has-uploads');
+  else grid.classList.remove('has-uploads');
+  if(isAdmin) grid.classList.add('admin-active');
+  else grid.classList.remove('admin-active');
+
+  allPhotos.forEach((photo, idx) => {
+    const div = document.createElement('div');
+    div.className = 'g-item';
+    div.innerHTML = `
+      <img src="${photo.src}" alt="${photo.lbl}" loading="lazy">
+      <div class="g-ov">
+        <div class="g-lbl">${photo.lbl}</div>
+        <div class="g-sub2">${photo.sub}</div>
+      </div>
+      ${(!photo.isDefault && isAdmin) ? `<button class="g-delete-btn" onclick="deletePhoto(${idx - defaultPhotos.length})" title="Delete">✕</button>` : ''}
+    `;
+    grid.appendChild(div);
+  });
+}
+
+function deletePhoto(uploadedIdx) {
+  if(!confirm('Delete this photo?')) return;
+  const data = loadGalleryData();
+  data.splice(uploadedIdx, 1);
+  saveGalleryData(data);
+  renderGallery();
+}
+
+// Admin login
+function handleAdminToggle() {
+  if(isAdmin) {
+    // Logout
+    isAdmin = false;
+    document.getElementById('adminToggleBtn').textContent = '🔐 Owner Login';
+    document.getElementById('adminToggleBtn').classList.remove('active');
+    document.getElementById('uploadPanel').classList.remove('show');
+    document.getElementById('adminStatus').style.display = 'none';
+    renderGallery();
+  } else {
+    document.getElementById('loginModal').classList.add('show');
+    setTimeout(()=>document.getElementById('adminPassInput').focus(), 100);
+  }
+}
+
+function checkLogin() {
+  const val = document.getElementById('adminPassInput').value;
+  if(val === ADMIN_PASS) {
+    isAdmin = true;
+    closeModal();
+    document.getElementById('adminToggleBtn').textContent = '🔓 Logout Admin';
+    document.getElementById('adminToggleBtn').classList.add('active');
+    document.getElementById('uploadPanel').classList.add('show');
+    const st = document.getElementById('adminStatus');
+    st.textContent = '✅ Logged in as Sangeeta';
+    st.style.display = 'inline';
+    renderGallery();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+    document.getElementById('adminPassInput').value = '';
+    document.getElementById('adminPassInput').focus();
+  }
+}
+
+function closeModal() {
+  document.getElementById('loginModal').classList.remove('show');
+  document.getElementById('adminPassInput').value = '';
+  document.getElementById('loginErr').style.display = 'none';
+}
+
+// File handling
+function handleFiles(files) {
+  pendingFiles = [];
+  document.getElementById('uploadPreview').innerHTML = '';
+  document.getElementById('captionRow').style.display = 'none';
+  if(!files.length) return;
+  let loaded = 0;
+  Array.from(files).forEach((file, i) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      pendingFiles[i] = e.target.result;
+      const preview = document.getElementById('uploadPreview');
+      const thumb = document.createElement('div');
+      thumb.className = 'upload-thumb';
+      thumb.innerHTML = `<img src="${e.target.result}"><button class="upload-thumb-del" onclick="removePending(${i})">✕</button>`;
+      preview.appendChild(thumb);
+      loaded++;
+      if(loaded === files.length) {
+        document.getElementById('captionRow').style.display = 'flex';
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function removePending(idx) {
+  pendingFiles[idx] = null;
+  renderPendingThumbs();
+}
+
+function renderPendingThumbs() {
+  const preview = document.getElementById('uploadPreview');
+  preview.innerHTML = '';
+  const active = pendingFiles.filter(Boolean);
+  if(!active.length) { document.getElementById('captionRow').style.display='none'; return; }
+  active.forEach((src, i) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'upload-thumb';
+    thumb.innerHTML = `<img src="${src}"><button class="upload-thumb-del" onclick="removePendingByActive(${i})">✕</button>`;
+    preview.appendChild(thumb);
+  });
+}
+
+function removePendingByActive(activeIdx) {
+  const active = pendingFiles.filter(Boolean);
+  const src = active[activeIdx];
+  const realIdx = pendingFiles.indexOf(src);
+  pendingFiles[realIdx] = null;
+  renderPendingThumbs();
+}
+
+function addToGallery() {
+  const active = pendingFiles.filter(Boolean);
+  if(!active.length) { alert('Please select at least one photo.'); return; }
+  const lbl = document.getElementById('captionInput').value.trim() || 'Our Work';
+  const sub = document.getElementById('subcaptionInput').value.trim() || 'Aakarshan Beauty Parlour';
+  const data = loadGalleryData();
+  active.forEach(src => data.push({ src, lbl, sub, isDefault:false }));
+  saveGalleryData(data);
+  // Reset
+  pendingFiles = [];
+  document.getElementById('uploadPreview').innerHTML = '';
+  document.getElementById('captionRow').style.display = 'none';
+  document.getElementById('captionInput').value = '';
+  document.getElementById('subcaptionInput').value = '';
+  document.getElementById('fileInput').value = '';
+  renderGallery();
+  alert(`✅ ${active.length} photo(s) added to gallery!`);
+}
+
+// Drag & Drop
+function dragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+function dragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+function dropFiles(e) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  handleFiles(e.dataTransfer.files);
+}
+
+// Close modal on overlay click
+document.getElementById('loginModal').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+
+// ===================== RATING & REVIEW SYSTEM =====================
+const REVIEW_KEY = 'aakarshan_reviews_v1';
+const defaultReviews = [
+  { name:'Priya Sharma', loc:'Seoni, Madhya Pradesh', stars:5, text:'I had my bridal makeup done at Aakarshan and I looked absolutely stunning! The team understood exactly what I wanted. My guests couldn\'t stop complimenting me all day!' },
+  { name:'Ananya Reddy', loc:'Seoni, Madhya Pradesh', stars:5, text:'The HydraFacial here completely transformed my skin! The staff is so warm and welcoming. I\'ve been a regular for 3 years and the quality never disappoints.' },
+  { name:'Sneha Kulkarni', loc:'Seoni, Madhya Pradesh', stars:5, text:'Best hair colour I\'ve ever had! They recommended the perfect shade and the keratin treatment left my hair silky smooth for months. Absolutely love this place!' }
+];
+
+let selectedStars = 0;
+
+function loadReviews() {
+  try { return JSON.parse(localStorage.getItem(REVIEW_KEY)) || []; } catch(e) { return []; }
+}
+function saveReviews(data) {
+  try { localStorage.setItem(REVIEW_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+function allReviews() { return [...defaultReviews, ...loadReviews()]; }
+
+function starsHTML(n) { return '★'.repeat(n) + '☆'.repeat(5-n); }
+
+function renderReviews() {
+  const grid = document.getElementById('reviewsGrid');
+  if(!grid) return;
+  const reviews = allReviews();
+  grid.innerHTML = '';
+  reviews.forEach(r => {
+    const initials = r.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const div = document.createElement('div');
+    div.className = 'tcard';
+    div.innerHTML = `
+      <div class="t-badge">Verified ✓</div>
+      <div class="t-stars" style="color:var(--gold)">${'★'.repeat(r.stars)}</div>
+      <p class="t-text">${r.text}</p>
+      <div class="t-author">
+        <div class="t-av">${initials}</div>
+        <div><div class="t-name">${r.name}</div><div class="t-loc">📍 ${r.loc||'Seoni, MP'}</div></div>
+      </div>`;
+    grid.appendChild(div);
+  });
+  updateRatingSummary(reviews);
+}
+
+function updateRatingSummary(reviews) {
+  const total = reviews.length;
+  const sum = reviews.reduce((a,r)=>a+r.stars,0);
+  const avg = total ? (sum/total).toFixed(1) : '5.0';
+  document.getElementById('rsSore').textContent = avg;
+  const fullStars = Math.round(parseFloat(avg));
+  document.getElementById('rsStars').textContent = '★'.repeat(fullStars) + '☆'.repeat(5-fullStars);
+  document.getElementById('rsCount').textContent = `Based on ${total} review${total!==1?'s':''}`;
+  const bars = document.getElementById('rsBars');
+  bars.innerHTML = '';
+  for(let s=5;s>=1;s--) {
+    const count = reviews.filter(r=>r.stars===s).length;
+    const pct = total ? Math.round((count/total)*100) : 0;
+    bars.innerHTML += `<div class="rs-bar-row"><span>${s}★</span><div class="rs-bar-track"><div class="rs-bar-fill" style="width:${pct}%"></div></div><span>${count}</span></div>`;
+  }
+}
+
+// Star picker
+document.addEventListener('DOMContentLoaded', ()=>{
+  const stars = document.querySelectorAll('.sp-star');
+  stars.forEach(star => {
+    star.addEventListener('mouseover', ()=>{
+      const val = +star.dataset.val;
+      stars.forEach(s => s.classList.toggle('active', +s.dataset.val<=val));
+    });
+    star.addEventListener('mouseleave', ()=>{
+      stars.forEach(s => s.classList.toggle('active', +s.dataset.val<=selectedStars));
+    });
+    star.addEventListener('click', ()=>{
+      selectedStars = +star.dataset.val;
+      stars.forEach(s => s.classList.toggle('active', +s.dataset.val<=selectedStars));
+      const labels = ['','Poor 😕','Fair 😐','Good 🙂','Great 😊','Excellent 🤩'];
+      document.getElementById('starLabel').textContent = labels[selectedStars];
+    });
+  });
+  renderReviews();
+});
+
+function submitReview() {
+  const name = document.getElementById('rvName').value.trim();
+  const loc  = document.getElementById('rvLoc').value.trim();
+  const text = document.getElementById('rvText').value.trim();
+  if(!name) { alert('Please enter your name.'); return; }
+  if(!selectedStars) { alert('Please select a star rating.'); return; }
+  if(!text) { alert('Please write a short review.'); return; }
+
+  const data = loadReviews();
+  data.push({ name, loc: loc||'Seoni, MP', stars: selectedStars, text });
+  saveReviews(data);
+  renderReviews();
+
+  // Reset form
+  document.getElementById('rvName').value = '';
+  document.getElementById('rvLoc').value = '';
+  document.getElementById('rvText').value = '';
+  selectedStars = 0;
+  document.querySelectorAll('.sp-star').forEach(s=>s.classList.remove('active'));
+  document.getElementById('starLabel').textContent = 'Tap a star to rate';
+  const ok = document.getElementById('rvSuccess');
+  ok.style.display = 'block';
+  setTimeout(()=>ok.style.display='none', 4000);
+}
+
+// Init on load (fallback if DOMContentLoaded already fired)
+if(document.readyState !== 'loading') renderReviews();
+</script>
+</body>
+</html>
