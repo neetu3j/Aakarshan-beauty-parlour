@@ -1278,7 +1278,7 @@ async function saveOnlineReview(review) {
     await fetch(GSHEET_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(review),
+      body: JSON.stringify({ type: "review", name: review.name, loc: review.loc, stars: review.stars, text: review.text }),
       mode: 'no-cors'
     });
   } catch(e) {
